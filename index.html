@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap");
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Inter;
+      }
+
+      input {
+        display: block;
+      }
+
+      .button-container {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        display: flex;
+        justify-content: center;
+        padding: 0 24px 40px;
+      }
+
+      button {
+        font-family: inter;
+        font-weight: 600;
+        background-color: #10b981;
+        border: none;
+        font-size: 16px;
+        color: white;
+        text-transform: capitalize;
+        width: 100vw;
+        height: 54px;
+      }
+
+      h1 {
+        font-size: 24px;
+        font-weight: 400;
+        margin-left: 24px;
+        margin-top: 52px;
+      }
+
+      p {
+        margin: 8px 24px 0;
+        color: #7e7e7e;
+        line-height: 1.5;
+      }
+
+      strong {
+        color: black;
+      }
+
+      .input-harga {
+        margin-top: 80px;
+        padding: 0 24px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 10px;
+        font-weight: bold;
+        font-size: 14px;
+      }
+
+      input {
+        font-family: inter;
+        font-size: 16px;
+        border: 1px solid black;
+        padding: 14px 10px 13px 16px;
+        width: 100%;
+      }
+
+      p.label {
+        color: black;
+        margin: 0;
+        padding: 0;
+        font-size: 14px;
+        margin-bottom: 12px;
+        line-height: 1;
+      }
+
+      .result:first-child {
+        margin-top: 200px;
+        margin-bottom: 40px;
+      }
+
+      .result {
+        text-align: center;
+      }
+
+      .tree {
+        color: #10b981;
+      }
+
+      .tree p.label {
+        color: #10b981;
+      }
+
+      footer {
+        background-color: white;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        text-align: center;
+        margin-bottom: 52px;
+        font-size: 14px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Pohon.</h1>
+      <p>
+        Hitung berapa banyak pohon yang kamu butuhkan untuk mengimbangi
+        <strong>emisi karbon</strong> dari listrik rumahmu
+      </p>
+    </header>
+    <main>
+      <div class="input-harga">
+        <label for="biaya">Biaya listrik perbulan</label>
+        <input type="text" name="biaya" id="biaya" />
+      </div>
+      <div class="button-container">
+        <button>hitung</button>
+      </div>
+    </main>
+    <script>
+      const hitungButton = document.querySelector("button");
+      hitungButton.addEventListener("click", function () {
+        // perhitungan
+        const biaya = parseInt(document.querySelector("input").value);
+        const kWh = 1000;
+        const faktorEmisi = 0.000974; // tonCo2/kWh
+        const konsumsiKwh = biaya / kWh; // kWh/bulan
+        const emisiPerbulan = konsumsiKwh * faktorEmisi;
+        const emisiPertahun = emisiPerbulan * 12;
+
+        // dom manipulation for result
+        const body = document.querySelector("body");
+        body.innerHTML = html`
+          <main>
+            <div class="result carbon">
+              <p class="label">Emisi tahunan rumahmu</p>
+              <h2>${emisiPertahun.toFixed(2)} ton Co2/kWh</h2>
+            </div>
+            <div class="result tree">
+              <p class="label">Pohon yang bisa kamu tanam</p>
+              <h2>1 Pohon Trembesi</h2>
+            </div>
+          </main>
+          <footer>
+            <p>Harga listrik --> 1000/kWh</p>
+            <p>Faktor emisi --> 0.000974 ton Co2/kWh</p>
+            <p>Emisi --> Harga listrik * Faktor emisi</p>
+          </footer>
+        `;
+      });
+    </script>
+  </body>
+</html>
